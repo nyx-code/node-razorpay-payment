@@ -60,4 +60,25 @@ router.get('/:id/bank', (req, res) => {
     })
 })
 
+router.post('/create-link', (req, res) => {
+    const params = {
+        type: "link",
+        amount: req.body.amount,
+        currency: req.body.currency,
+        description: req.body.description,
+        customer: req.body.customer
+    }
+    RazorPay.invoices.create(params).then((data)=>{
+        res.status(200).json({
+            status: "success",
+            data
+        })
+    }).catch((error)=>{
+        res.status(500).json({
+            status: "fail",
+            error
+        })
+    })
+})
+
 module.exports = router
